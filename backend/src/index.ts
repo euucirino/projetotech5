@@ -6,6 +6,11 @@ import commentModel from './models/commentModel'
  
  const app = express()
  const port = 3000
+
+productModel.hasMany(commentModel, { foreignKey: "productId" });
+userModel.hasMany(commentModel, { foreignKey: "userId" });
+commentModel.belongsTo(productModel, { foreignKey: "productId" });
+commentModel.belongsTo(userModel, { foreignKey: "userId" });
  
  app.get('/', (req, res) => {
      res.send('Hello, World! :)')

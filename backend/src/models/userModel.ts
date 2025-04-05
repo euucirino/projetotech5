@@ -1,6 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from '../config/database';
 import bcrypt from 'bcrypt';
+import CommentModel from "./commentModel";
 
 class UserModel extends Model {
     id: number | undefined;
@@ -56,5 +57,8 @@ UserModel.beforeUpdate(async (user: UserModel) => {
         await user.hashPassword();
     }
 });
+
+
+UserModel.hasMany(CommentModel, { foreignKey: 'userId' });
 
 export default UserModel;

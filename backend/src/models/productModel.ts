@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database";
+import CommentModel from "./commentModel";
 
 class ProductModel extends Model {
     id: number | undefined;
@@ -44,5 +45,8 @@ ProductModel.init(
         tableName: "products",
     }
 );
+
+
+
 
 export default ProductModel;
