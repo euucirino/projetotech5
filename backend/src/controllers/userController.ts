@@ -27,29 +27,33 @@ export const createUser = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request<{ id: string }>, res: Response) => {
-  try {
-    const { name, email, cpf, password } = req.body;
-
-    if (!name || !email || !cpf || !password) {
-      return res.status(400).json({ error: 'Valores obrigatórios' });
+    try {
+      const { name, email, cpf, password } = req.body;
+  
+      if (!name || !email || !cpf || !password) {
+        return res.status(400).json({ error: 'Valores obrigatórios' });
+      }
+  
+      const user = await UserModel.findByPk(req.params.id);
+      if (!user) {
+        return res.status(404).json({ error: 'Usuário não encontrado' });
+      }
+  
+      if (email !== user.email) {
+        return res.status(400).json({ error: 'Não é permitido alterar o e-mail' });
+      }
+  
+      user.name = name;
+      user.cpf = cpf;
+      user.password = password;
+  
+      await user.save();
+      res.status(200).json(user);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro interno no servidor' });
     }
-
-    const user = await UserModel.findByPk(req.params.id);
-    if (!user) {
-      return res.status(404).json({ error: 'Usuário não encontrado' });
-    }
-
-    user.name = name;
-    user.email = email;
-    user.cpf = cpf;
-    user.password = password;
-
-    await user.save();
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro interno no servidor' });
-  }
-};
+  };
+  
 
 export const destroyUserById = async (req: Request<{ id: string }>, res: Response) => {
   try {
