@@ -6,6 +6,7 @@ import commentModel from './models/commentModel';
 import userRoutes from './routes/userRoutes';
 import productRoutes from './routes/productRoutes';
 import commentRoutes from './routes/commentRoutes';
+import loginRoutes from "./routes/loginRoutes";
 
 const app = express();
 const port = 3000;
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use('/api', userRoutes);
 app.use('/api', productRoutes);
 app.use('/api', commentRoutes);
+app.use("/auth", loginRoutes);
 
 
 productModel.hasMany(commentModel, { foreignKey: 'productId' });
