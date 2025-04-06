@@ -13,11 +13,11 @@ export const getById = async (req: Request<{ id: string }>, res: Response) => {
 
 export const create = async (req: Request, res: Response) => {
     try {
-        const { text, productId } = req.body;
-        if (!text || !productId) {
+        const { text, productId, userId } = req.body;
+        if (!text || !productId || !userId) {
             return res.status(400).json({ error: "Valores obrigatórios" });
         }
-        const comment = await CommentModel.create({ text, productId });
+        const comment = await CommentModel.create({ text, productId, userId });
         res.status(201).json(comment);
     } catch (error) {
         res.status(500).json("Erro interno no servidor " + error);
@@ -26,8 +26,8 @@ export const create = async (req: Request, res: Response) => {
 
 export const update = async (req: Request<{ id: string }>, res: Response) => {
     try {
-        const { text, productId } = req.body;
-        if (!text || !productId) {
+        const { text, productId, userId } = req.body;
+        if (!text || !productId || !userId) {
             return res.status(400).json({ error: "Valores obrigatórios" });
         }
         const comment = await CommentModel.findByPk(req.params.id);
@@ -36,6 +36,7 @@ export const update = async (req: Request<{ id: string }>, res: Response) => {
         }
         comment.text = text;
         comment.productId = productId;
+        comment.userId = userId;
         await comment.save();
         res.status(201).json(comment);
     } catch (error) {

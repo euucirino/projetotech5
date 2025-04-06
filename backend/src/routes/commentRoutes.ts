@@ -1,11 +1,5 @@
 import express from 'express';
-import {
-  getAll,
-  getById,
-  create,
-  update,
-  destroyById
-} from '../controllers/commentController';
+import { create, getAll, getById, update, destroyById } from '../controllers/commentController';
 import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = express.Router();
