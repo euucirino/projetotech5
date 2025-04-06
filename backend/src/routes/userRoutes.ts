@@ -16,7 +16,7 @@ router.post('/users', validarCadastro, createUser);
 
 // Rotas privadas
 router.get('/users', authMiddleware, getAll);
-router.get('/users/:id', authMiddleware, getUserById);
+router.get('/users/:id', authMiddleware, getUserById)
 router.put('/users/:id', authMiddleware, validarCadastro, updateUser);
 router.delete('/users/:id', authMiddleware, destroyUserById);
 
